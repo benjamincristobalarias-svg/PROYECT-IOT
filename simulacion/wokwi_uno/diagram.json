@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "author": "Monitor estructural - Arduino Uno",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-breadboard-half",
+      "id": "bb1",
+      "top": 40,
+      "left": 40,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 60,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -110,
+      "left": 50,
+      "attrs": {
+        "volume": "0.3"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": -20,
+      "left": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_rojo",
+      "top": -100,
+      "left": 150,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -20,
+      "left": 180,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_verde",
+      "top": -100,
+      "left": 230,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -80,
+      "left": 270,
+      "attrs": {
+        "color": "blue"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot1",
+      "top": -110,
+      "left": 350,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [
+      "uno:5V",
+      "bb1:tp.25",
+      "red",
+      []
+    ],
+    [
+      "uno:GND.1",
+      "bb1:tn.25",
+      "black",
+      []
+    ],
+    [
+      "bb1:tn.1",
+      "bb1:bn.1",
+      "black",
+      []
+    ],
+    [
+      "bz1:2",
+      "bb1:2t.e",
+      "purple",
+      []
+    ],
+    [
+      "bz1:1",
+      "bb1:3t.e",
+      "black",
+      []
+    ],
+    [
+      "uno:8",
+      "bb1:2t.a",
+      "purple",
+      []
+    ],
+    [
+      "bb1:3t.a",
+      "bb1:tn.3",
+      "black",
+      []
+    ],
+    [
+      "uno:7",
+      "bb1:5t.a",
+      "orange",
+      []
+    ],
+    [
+      "r2:1",
+      "bb1:5t.c",
+      "orange",
+      []
+    ],
+    [
+      "r2:2",
+      "bb1:8t.c",
+      "orange",
+      []
+    ],
+    [
+      "led_rojo:A",
+      "bb1:8t.e",
+      "red",
+      []
+    ],
+    [
+      "led_rojo:C",
+      "bb1:9t.e",
+      "black",
+      []
+    ],
+    [
+      "bb1:9t.a",
+      "bb1:tn.8",
+      "black",
+      []
+    ],
+    [
+      "uno:6",
+      "bb1:11t.a",
+      "green",
+      []
+    ],
+    [
+      "r1:1",
+      "bb1:11t.c",
+      "green",
+      []
+    ],
+    [
+      "r1:2",
+      "bb1:14t.c",
+      "green",
+      []
+    ],
+    [
+      "led_verde:A",
+      "bb1:14t.e",
+      "green",
+      []
+    ],
+    [
+      "led_verde:C",
+      "bb1:15t.e",
+      "black",
+      []
+    ],
+    [
+      "bb1:15t.a",
+      "bb1:tn.13",
+      "black",
+      []
+    ],
+    [
+      "btn1:1.l",
+      "bb1:17t.e",
+      "blue",
+      []
+    ],
+    [
+      "btn1:2.r",
+      "bb1:19b.f",
+      "black",
+      []
+    ],
+    [
+      "uno:2",
+      "bb1:17t.a",
+      "blue",
+      []
+    ],
+    [
+      "bb1:19b.j",
+      "bb1:bn.16",
+      "black",
+      []
+    ],
+    [
+      "pot1:VCC",
+      "bb1:20t.e",
+      "red",
+      []
+    ],
+    [
+      "pot1:SIG",
+      "bb1:21t.e",
+      "gold",
+      []
+    ],
+    [
+      "pot1:GND",
+      "bb1:22t.e",
+      "black",
+      []
+    ],
+    [
+      "bb1:20t.a",
+      "bb1:tp.17",
+      "red",
+      []
+    ],
+    [
+      "uno:A0",
+      "bb1:21t.a",
+      "gold",
+      []
+    ],
+    [
+      "bb1:22t.a",
+      "bb1:tn.18",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

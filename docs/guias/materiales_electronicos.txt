@@ -1,0 +1,38 @@
+LISTA DE COMPONENTES ELECTRONICOS
+Proyecto: Sistema IoT de Monitoreo de Salud Estructural
+Asignatura: TI3042 - Aplicaciones Moviles para IoT
+
+---------------------------------------------------------------
+COMPONENTE                          CANTIDAD
+---------------------------------------------------------------
+ESP32 DevKit (WROOM-32)                 2
+Acelerometro MPU6050 (GY-521)           1
+Potenciometro 10 kOhm                   1
+LED 5 mm verde                          1
+LED 5 mm rojo                           1
+Resistencia 220 Ohm                     2
+Buzzer                                  1
+Pulsador (4 patas)                      1
+Protoboard                              2
+Cables Dupont macho-macho (set)         1
+Cable micro USB de datos                2
+---------------------------------------------------------------
+
+DISTRIBUCION POR NODO
+
+Nodo sensor:
+  - ESP32 DevKit
+  - Acelerometro MPU6050
+  - Potenciometro 10 kOhm
+  - Pulsador
+  - Protoboard y cables
+
+Nodo base:
+  - ESP32 DevKit
+  - LED verde + resistencia 220 Ohm
+  - LED rojo + resistencia 220 Ohm
+  - Buzzer
+  - Protoboard y cables
+
+---------------------------------------------------------------
+NOTA: los cables USB deben ser de datos, no solo de carga.
