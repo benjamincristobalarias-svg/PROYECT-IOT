@@ -98,6 +98,11 @@ const float FREC_SIM_MAX = 40.0;
 // Posicion en la EEPROM donde se guarda la linea base
 const int DIR_EEPROM = 0;
 
+// Tiempo que hay que mantener el pulsador para recalibrar.
+// Evita que un toque accidental (o malintencionado) registre como
+// "sana" una estructura ya danada y borre la alerta.
+const unsigned long TIEMPO_RECALIBRAR = 3000;  // milisegundos
+
 // ---------------- VARIABLES GLOBALES ----------------
 // En el Uno un float ocupa 4 bytes: 128 x 4 x 2 = 1 KB de RAM,
 // la mitad de toda la memoria disponible.
@@ -170,7 +175,7 @@ void loop() {
     Serial.print(F(" Hz | Amplitud: "));
     Serial.println(amplitud, 0);
 
-    if (digitalRead(PIN_BOTON) == LOW) {
+    if (botonMantenido()) {
       calibrar(frecuencia);
       enviarTrama("CALIBRADO", frecuencia, 0.0, amplitud);
     } else if (frecuenciaBase > 0) {
@@ -280,6 +285,22 @@ float calcularFrecuencia(float *amplitud) {
   }
   *amplitud = maximo;
   return (indicePico * SAMPLING_FREQUENCY) / SAMPLES;   // Bin -> Hz
+}
+
+// ============================================================
+//  PULSADOR PROTEGIDO
+// ============================================================
+// Devuelve true solo si el pulsador se mantiene apretado durante
+// TIEMPO_RECALIBRAR. Un toque corto se ignora.
+bool botonMantenido() {
+  if (digitalRead(PIN_BOTON) == HIGH) return false;
+  Serial.println(F("Mantener el pulsador 3 s para recalibrar..."));
+  unsigned long inicio = millis();
+  while (digitalRead(PIN_BOTON) == LOW) {
+    if (millis() - inicio >= TIEMPO_RECALIBRAR) return true;
+  }
+  Serial.println(F("Recalibracion cancelada: pulsador soltado antes de tiempo."));
+  return false;
 }
 
 // ============================================================

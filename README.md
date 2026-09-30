@@ -34,6 +34,8 @@ El **ID** permite monitorear **varias estructuras** a la vez: la app agrupa las 
 
 - **Prototipo actual (probado):** un nodo sobre Arduino Uno. La trama sale por el puerto serie.
 - **Diseño con ESP32 (programado, sin verificación física):** nodo sensor + nodo base enlazados por Bluetooth Classic (SPP).
+![Arquitectura](docs/arquitectura_varias_estructuras.png)
+
 - **Proyección con varias estructuras:** cada nodo ESP32 envía sus datos por **WiFi** a un servidor (ej. Firebase) y la app móvil los lee desde ahí. Bluetooth queda para **configurar y recalibrar el nodo en terreno**, lo que además impide recalibraciones remotas no autorizadas.
 
 ---
@@ -49,7 +51,8 @@ simulacion/
   wokwi_uno/                                 Proyecto Wokwi del Uno (diagram.json + sketch)
   wokwi_esp32/                               Sketch de un nodo ESP32 completo
 docs/
-  informes/                                  EF1 y ES1 entregados
+  informes/                                  EF1, ES1 e Informe Unidad 2
+  mockup/                                    Propuestas de pantallas de la app
   guias/                                     Armado, verificación, materiales y chuleta
   respaldo_estadistico.md                    Datos 27F y CASEN con fuentes
 ```
@@ -72,7 +75,7 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 
 **Librería:** `arduinoFFT`. Monitor serie a **115200**.
 
-**Demo:** potenciómetro alto → pulsador (registra la línea base) → potenciómetro bajo → LED rojo y buzzer. Para mostrar el amarillo, conectar un segundo potenciómetro en A1 y poner `USAR_POTE_AMPLITUD = true`: al subirlo se encienden verde y rojo juntos.
+**Demo:** potenciómetro alto → pulsador **mantenido 3 s** (registra la línea base) → potenciómetro bajo → LED rojo y buzzer. Para mostrar el amarillo, conectar un segundo potenciómetro en A1 y poner `USAR_POTE_AMPLITUD = true`: al subirlo se encienden verde y rojo juntos.
 
 ### Parámetros principales
 
@@ -92,6 +95,8 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 
 - [x] Unidad 1 — prototipo Arduino funcional, informes EF1 y ES1
 - [x] Modelo de varias estructuras: ID por nodo y estado amarillo por amplitud
+- [x] Recalibración protegida (pulsador mantenido 3 s)
+- [x] Informe Unidad 2 con todas las actualizaciones
 - [ ] Verificación física del enlace Bluetooth entre dos ESP32
 - [ ] Unidad 2 — app Android (Kotlin): inicio de sesión, lista de estructuras, detalle
 - [ ] Unidad 3 — integración app ↔ nodos

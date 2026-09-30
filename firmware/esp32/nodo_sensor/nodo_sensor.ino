@@ -89,6 +89,9 @@ const double AMPLITUD_SISMO = 230000.0;
 // false si no esta conectado: un pin al aire lee ruido.
 const bool USAR_POTE_AMPLITUD = false;
 
+// Tiempo que hay que mantener el pulsador para recalibrar.
+const unsigned long TIEMPO_RECALIBRAR = 3000;  // milisegundos
+
 // Rango de frecuencias simuladas (solo en MODO_SIMULACION)
 const double FREC_SIM_MIN = 5.0;
 const double FREC_SIM_MAX = 40.0;
@@ -194,7 +197,7 @@ void loop() {
     Serial.println(amplitudPico, 1);
 
     // Calibracion por boton: fija la frecuencia actual como referencia
-    if (digitalRead(PIN_BOTON) == LOW) {
+    if (botonMantenido()) {
       calibrar(frecuencia);
       enviarTrama("CALIBRADO", frecuencia, frecuenciaBase, 0.0);
     }
@@ -378,6 +381,23 @@ double calcularFrecuencia(double *amplitud) {
   // Conversion de indice de bin a frecuencia en Hz.
   // Cada bin representa (Fs / SAMPLES) Hz.
   return (indicePico * SAMPLING_FREQUENCY) / SAMPLES;
+}
+
+// ============================================================
+//  PULSADOR PROTEGIDO
+// ============================================================
+// Solo recalibra si el pulsador se mantiene TIEMPO_RECALIBRAR ms.
+// Evita que un toque registre como sana una estructura danada.
+bool botonMantenido() {
+  if (digitalRead(PIN_BOTON) == HIGH) return false;
+  Serial.println("Mantener el pulsador 3 s para recalibrar...");
+  unsigned long inicio = millis();
+  while (digitalRead(PIN_BOTON) == LOW) {
+    if (millis() - inicio >= TIEMPO_RECALIBRAR) return true;
+    delay(10);
+  }
+  Serial.println("Recalibracion cancelada: pulsador soltado antes de tiempo.");
+  return false;
 }
 
 // ============================================================

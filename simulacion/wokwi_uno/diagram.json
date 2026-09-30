@@ -77,6 +77,13 @@
       "top": -110,
       "left": 350,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot2",
+      "top": -110,
+      "left": 450,
+      "attrs": {}
     }
   ],
   "connections": [
@@ -251,6 +258,24 @@
     [
       "bb1:22t.a",
       "bb1:tn.18",
+      "black",
+      []
+    ],
+    [
+      "pot2:SIG",
+      "uno:A1",
+      "cyan",
+      []
+    ],
+    [
+      "pot2:VCC",
+      "bb1:tp.22",
+      "red",
+      []
+    ],
+    [
+      "pot2:GND",
+      "bb1:tn.22",
       "black",
       []
     ]
