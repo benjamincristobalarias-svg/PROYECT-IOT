@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup app monitor estructural</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--s1:#F1EFE8;--s2:#fff;--bd:#D3D1C7;--bd2:#B4B2A9;--tx:#2C2C2A;--tx2:#5F5E5A;--mut:#888780;--acc:#185FA5;--bgd:#FCEBEB;--txd:#A32D2D;--txw:#854F0B}
+body{margin:0;padding:24px;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--tx)}
+h1{font-size:20px;font-weight:500;margin:0 0 16px}
+.wrap{background:var(--s1);border-radius:12px;padding:16px;display:grid;grid-template-columns:repeat(3,300px);gap:16px;width:max-content}
+.ph{background:var(--s2);border:0.5px solid var(--bd);border-radius:26px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;min-height:560px}
+.bar{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:500;padding:2px}
+.cd{background:var(--s1);border-radius:12px;padding:10px;font-size:13px}
+.lb{color:var(--tx2);font-size:12px}
+.in{border:0.5px solid var(--bd2);border-radius:8px;padding:9px;font-size:13px;color:var(--mut)}
+.bt{background:var(--acc);color:#fff;border-radius:20px;text-align:center;padding:10px;font-size:13px;font-weight:500}
+.bt2{border:0.5px solid var(--bd2);border-radius:20px;text-align:center;padding:9px;font-size:13px}
+.it{display:flex;align-items:center;gap:6px;padding:9px;border-radius:10px;background:var(--s1);font-size:13px}
+.tag{font-size:12px;color:var(--tx2);text-align:center;margin-top:8px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:4px}
+</style></head><body>
+<h1>Mockup propuesto — app Monitor estructural (3 niveles)</h1>
+<div class="wrap">
+<div><div class="ph">
+<div style="text-align:center;margin-top:36px"><i class="ti ti-building-skyscraper" style="font-size:28px;color:var(--acc)"></i><div style="font-size:17px;font-weight:500;margin-top:6px">Monitor estructural</div><div class="lb">Ingresa a tu cuenta</div></div>
+<div style="margin-top:22px" class="lb">Correo</div><div class="in">nombre@correo.cl</div>
+<div class="lb">Contraseña</div><div class="in">••••••••</div>
+<div class="bt" style="margin-top:12px">Ingresar</div>
+<div class="lb" style="text-align:center;color:var(--acc)">¿Olvidaste tu contraseña?</div>
+</div><div class="tag">1. Inicio de sesión</div></div>
+
+<div><div class="ph">
+<div class="bar" style="justify-content:space-between">Mis estructuras<i class="ti ti-plus"></i></div>
+<div class="lb"><i class="ti ti-wifi"></i> Actualizado hace 1 min</div>
+<div class="it"><div style="flex:1"><div style="font-weight:500">Edificio B</div><div class="lb" style="color:var(--txd)">Caída 34,6 %</div></div><svg viewBox="0 0 60 20" width="70" height="22"><polyline fill="none" stroke="#E24B4A" stroke-width="1.6" points="0,4 12,5 20,6 28,10 36,14 44,15 52,16 60,16"/></svg></div>
+<div class="it"><div style="flex:1"><div style="font-weight:500">Edificio A</div><div class="lb" style="color:var(--txw)">Vibración fuerte</div></div><svg viewBox="0 0 60 20" width="70" height="22"><polyline fill="none" stroke="#BA7517" stroke-width="1.6" points="0,10 8,4 14,16 20,3 26,17 32,5 40,14 48,8 60,10"/></svg></div>
+<div class="it"><div style="flex:1"><div style="font-weight:500">Casa 1</div><div class="lb">40,6 Hz</div></div><svg viewBox="0 0 60 20" width="70" height="22"><polyline fill="none" stroke="#639922" stroke-width="1.6" points="0,10 8,9 16,11 24,10 32,9 40,11 48,10 60,10"/></svg></div>
+<div class="it"><div style="flex:1"><div style="font-weight:500">Bodega Norte</div><div class="lb">38,1 Hz</div></div><svg viewBox="0 0 60 20" width="70" height="22"><polyline fill="none" stroke="#639922" stroke-width="1.6" points="0,10 8,11 16,9 24,10 32,11 40,9 48,10 60,10"/></svg></div>
+<div class="it"><div style="flex:1"><div style="font-weight:500">Casa 2</div><div class="lb">Sin datos hace 2 h</div></div><svg viewBox="0 0 60 20" width="70" height="22"><polyline fill="none" stroke="#888780" stroke-width="1.6" stroke-dasharray="3 3" points="0,10 60,10"/></svg></div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--tx2)">
+<span><span class="dot" style="background:#E24B4A"></span>Daño: revisión estructural</span>
+<span><span class="dot" style="background:#BA7517"></span>Vibración fuerte (sismo)</span>
+<span><span class="dot" style="background:#639922"></span>Normal</span>
+<span><span class="dot" style="background:#888780"></span>Sin conexión</span></div>
+</div><div class="tag">2. Dispositivos conectados</div></div>
+
+<div><div class="ph">
+<div class="bar"><i class="ti ti-arrow-left"></i>Edificio B</div>
+<div class="cd" style="background:var(--bgd)"><div style="font-weight:500;color:var(--txd)">Revisión estructural recomendada</div><div class="lb" style="color:var(--txd)">Pérdida de rigidez detectada</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="cd"><div class="lb">Actual</div><div style="font-weight:500">26,6 Hz</div></div>
+<div class="cd"><div class="lb">Línea base</div><div style="font-weight:500">40,6 Hz</div></div></div>
+<div class="cd"><div class="lb">Últimas 24 horas</div>
+<svg viewBox="0 0 160 42" style="width:100%;height:48px"><line x1="0" y1="10" x2="160" y2="10" stroke="#888780" stroke-width="0.6" stroke-dasharray="3 3"/><polyline fill="none" stroke="#E24B4A" stroke-width="1.5" points="0,10 30,11 55,10 70,12 85,22 100,30 120,33 140,34 160,34"/></svg></div>
+<div class="cd"><div class="lb">Ubicación del sensor</div><div>Viga piso 2, eje C</div></div>
+<div class="cd" style="display:flex;justify-content:space-between"><span><i class="ti ti-wifi"></i> En línea</span><span class="lb">ID: NODO-B</span></div>
+<div class="bt">Solicitar revisión</div>
+<div class="bt2"><i class="ti ti-bluetooth"></i> Recalibrar en terreno</div>
+<div class="lb" style="text-align:center">Requiere estar junto al sensor</div>
+</div><div class="tag">3. Detalle del dispositivo</div></div>
+</div></body></html>
