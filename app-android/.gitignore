@@ -1,0 +1,14 @@
+# Archivos que genera Android Studio / Gradle
+.gradle/
+.kotlin/
+build/
+app/build/
+captures/
+.idea/
+*.iml
+.externalNativeBuild/
+.cxx/
+local.properties
+
+# Configuración de Firebase: se comparte por privado, no se publica en GitHub
+app/google-services.json

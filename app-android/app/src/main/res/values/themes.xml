@@ -1,0 +1,8 @@
+<resources>
+    <!-- Tema Material Design 3 con los colores del proyecto -->
+    <style name="Theme.MonitorEstructural" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primario</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="android:colorBackground">@color/fondo</item>
+    </style>
+</resources>
