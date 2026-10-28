@@ -1,12 +1,36 @@
 {
   "rules": {
     "estructuras": {
-      ".read": true,
-      ".write": true
+      ".read": "auth != null",
+      "$id": {
+        ".write": "auth != null",
+        "nombre": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "ubicacion": { ".validate": "newData.isString() && newData.val().length <= 60" },
+        "frecuenciaBaseHz": { ".validate": "newData.isNumber() && newData.val() > 0 && newData.val() <= 100" },
+        "conectada": { ".validate": "newData.isBoolean()" },
+        "lectura": {
+          ".validate": "newData.hasChildren(['frecuenciaHz', 'amplitud', 'measuredAtMillis'])",
+          "frecuenciaHz": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+          "amplitud": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "measuredAtMillis": { ".validate": "newData.isNumber()" },
+          "$otro": { ".validate": false }
+        },
+        "$otro": { ".validate": false }
+      }
     },
     "historial": {
-      ".read": true,
-      ".write": true
+      ".read": "auth != null",
+      "$id": {
+        "$registro": {
+          ".write": "auth != null && !data.exists()",
+          ".validate": "newData.hasChildren(['frecuenciaHz', 'amplitud', 'measuredAtMillis', 'usuario'])",
+          "frecuenciaHz": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+          "amplitud": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "measuredAtMillis": { ".validate": "newData.isNumber()" },
+          "usuario": { ".validate": "newData.val() === auth.uid" },
+          "$otro": { ".validate": false }
+        }
+      }
     }
   }
 }

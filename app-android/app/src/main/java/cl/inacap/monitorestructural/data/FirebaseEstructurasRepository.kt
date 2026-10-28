@@ -4,6 +4,8 @@ package cl.inacap.monitorestructural.data
 import cl.inacap.monitorestructural.model.ConnectionStatus
 import cl.inacap.monitorestructural.model.Estructura
 import cl.inacap.monitorestructural.model.LecturaVibracion
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -13,18 +15,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 // Fuente de datos real: Firebase Realtime Database.
-// Cumple el mismo contrato que el simulador, así el ViewModel y la pantalla no cambian.
+// Cumple el mismo contrato que el simulador, así la pantalla de Monitoreo no cambia.
 //
-// Datos en Firebase:
+// Datos en Firebase (las reglas exigen haber iniciado sesión):
 //   estructuras/{id}         -> último estado de cada estructura
-//   historial/{id}/{clave}   -> cada lectura enviada (registro de todo lo que llegó)
+//   historial/{id}/{clave}   -> cada lectura enviada y quién la envió (solo se agrega, no se borra)
 class FirebaseEstructurasRepository : EstructurasRepository {
 
     private val database = FirebaseDatabase.getInstance()
     private val estructuras = database.getReference("estructuras")
     private val historial = database.getReference("historial")
+    private val auth = FirebaseAuth.getInstance()
 
-    // LEER: cada vez que cambia algo en "estructuras", Firebase avisa y se emite la lista nueva
+    // LEER (Monitoreo): cada vez que cambia algo en "estructuras", Firebase avisa y se emite la lista nueva
     override fun observeEstructuras(): Flow<List<Estructura>> = callbackFlow {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -42,27 +45,43 @@ class FirebaseEstructurasRepository : EstructurasRepository {
         awaitClose { estructuras.removeEventListener(listener) }
     }
 
-    // ENVIAR: guarda el estado actual de cada estructura y agrega la lectura al historial
-    fun guardar(lista: List<Estructura>) {
-        for (estructura in lista) {
-            estructuras.child(estructura.id).setValue(aMapa(estructura))
+    // CONEXIÓN: ".info/connected" vale true mientras el celular está conectado a Firebase
+    fun observeConexion(): Flow<Boolean> = callbackFlow {
+        val conexion = database.getReference(".info/connected")
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                trySend(snapshot.value == true)
+            }
 
-            val lectura = estructura.lectura
-            if (estructura.connection == ConnectionStatus.CONNECTED && lectura != null) {
-                // push() crea un registro nuevo con una clave única
-                historial.child(estructura.id).push().setValue(lecturaAMapa(lectura))
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
             }
         }
+        conexion.addValueEventListener(listener)
+        awaitClose { conexion.removeEventListener(listener) }
     }
 
-    // Estructura -> datos que entiende Firebase
-    private fun aMapa(estructura: Estructura): Map<String, Any?> = mapOf(
-        "nombre" to estructura.nombre,
-        "ubicacion" to estructura.ubicacion,
-        "frecuenciaBaseHz" to estructura.frecuenciaBaseHz,
-        "conectada" to (estructura.connection == ConnectionStatus.CONNECTED),
-        "lectura" to if (estructura.lectura == null) null else lecturaAMapa(estructura.lectura)
-    )
+    // ENVIAR (Activador): actualiza la estructura y agrega la lectura al historial.
+    // Devuelve la tarea de Firebase para saber cuándo el servidor confirmó el envío.
+    fun enviar(estructura: Estructura): Task<Void> {
+        val datos = mutableMapOf<String, Any>(
+            "nombre" to estructura.nombre,
+            "ubicacion" to estructura.ubicacion,
+            "frecuenciaBaseHz" to estructura.frecuenciaBaseHz,
+            "conectada" to (estructura.connection == ConnectionStatus.CONNECTED)
+        )
+        val lectura = estructura.lectura
+        if (estructura.connection == ConnectionStatus.CONNECTED && lectura != null) {
+            datos["lectura"] = lecturaAMapa(lectura)
+            // historial: la lectura y el usuario que la envió
+            // (las reglas revisan que "usuario" sea el mismo que inició sesión)
+            historial.child(estructura.id).push()
+                .setValue(lecturaAMapa(lectura) + ("usuario" to (auth.currentUser?.uid ?: "")))
+        }
+        // updateChildren cambia solo estos campos: si el sensor se desconecta,
+        // en Firebase se conserva su última lectura
+        return estructuras.child(estructura.id).updateChildren(datos)
+    }
 
     private fun lecturaAMapa(lectura: LecturaVibracion): Map<String, Any> = mapOf(
         "frecuenciaHz" to lectura.frecuenciaHz,

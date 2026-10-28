@@ -42,3 +42,27 @@ data class Estructura(
         get() = connection == ConnectionStatus.CONNECTED && !hasCurrentAlert &&
                 lectura != null && lectura.amplitud > AMPLITUD_SISMO
 }
+
+// Estructuras instaladas en terreno. La línea base se registra junto al sensor:
+// la app la muestra, pero no la puede cambiar (lineamiento OT)
+val ESTRUCTURAS_INSTALADAS = listOf(
+    Estructura("NODO-01", "Edificio A", "Viga piso 2, eje C", 40.0, ConnectionStatus.CONNECTED),
+    Estructura("NODO-02", "Edificio B", "Columna planta baja, eje A", 35.0, ConnectionStatus.CONNECTED),
+    Estructura("NODO-03", "Bodega Norte", "Muro norte, nivel 1", 28.0, ConnectionStatus.CONNECTED)
+)
+
+// Arma la estructura con lo que se eligió en el Activador.
+// Si el sensor está desconectado no hay lectura nueva (en Firebase se conserva la última)
+fun armarEstructura(
+    id: String,
+    frecuenciaHz: Double,
+    amplitud: Double,
+    conectado: Boolean,
+    nowMillis: Long
+): Estructura? {
+    val instalada = ESTRUCTURAS_INSTALADAS.find { it.id == id } ?: return null
+    return instalada.copy(
+        connection = if (conectado) ConnectionStatus.CONNECTED else ConnectionStatus.DISCONNECTED,
+        lectura = if (conectado) LecturaVibracion(frecuenciaHz, amplitud, nowMillis) else null
+    )
+}

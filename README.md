@@ -105,7 +105,8 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 - [x] Unidad 2 — app Android con Compose y ViewModel, estructuras simuladas cada 3 s ([app-android](app-android/))
 - [x] Unidad 2 — la app envía las lecturas a Firebase Realtime Database y muestra lo que hay guardado
 - [x] Unidad 2 — proyecto Firebase creado (`monitor-estructural`) y base de datos documentada en el Informe Formativa U2
-- [ ] Unidad 2 — agregar el inicio de sesión y reglas con `auth != null`
+- [x] Unidad 2 — Login (Firebase Authentication), pantallas Activador y Monitoreo, y reglas que exigen sesión
+- [ ] Unidad 2 — pruebas con dos celulares (tabla 11.3 del Informe Formativa U2)
 - [ ] Unidad 3 — integración app ↔ nodos
 - [ ] Unidad 4 — informe final
 
@@ -122,6 +123,6 @@ Esta versión del repositorio marca todo lo que se hizo con IA (Claude). Los arc
 | `docs/mockup/mockup_claude_v4.png` | Mockup de la app |
 | `docs/arquitectura_varias_estructuras.png` | Diagrama de la arquitectura |
 | `simulacion/wokwi_uno/diagram.json` | Circuito del Uno en Wokwi |
-| `app-android/` | La base es la plantilla de Android Studio del Ejemplo02 del profe. La IA escribió `MainActivity`, `model/`, `data/` (simulador y Firebase), `ui/Estructuras*`, `SimulacionTest` y `firebase/database.rules.json`, y agregó dependencias en `build.gradle.kts` y `libs.versions.toml` |
+| `app-android/` | La base es la plantilla de Android Studio del Ejemplo02 del profe. La IA escribió `MainActivity`, `model/`, `data/` (simulador, Firebase y login), `ui/` (Login, Activador, Monitoreo y pestañas), `SimulacionTest`, `LoginYActivadorTest` y `firebase/database.rules.json`, y agregó dependencias en `build.gradle.kts` y `libs.versions.toml` |
 
 Lo único que no es de la IA es el primer commit del repo (*Initial commit*).

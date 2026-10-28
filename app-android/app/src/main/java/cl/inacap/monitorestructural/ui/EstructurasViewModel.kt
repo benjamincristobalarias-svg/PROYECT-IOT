@@ -3,7 +3,6 @@ package cl.inacap.monitorestructural.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cl.inacap.monitorestructural.data.EstructurasRepository
 import cl.inacap.monitorestructural.data.FirebaseEstructurasRepository
 import cl.inacap.monitorestructural.model.ConnectionStatus
 import cl.inacap.monitorestructural.model.Estructura
@@ -12,9 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
-// Todo lo que la pantalla necesita mostrar
+// Todo lo que la pantalla de Monitoreo necesita mostrar
 data class EstructurasUiState(
     val isLoading: Boolean = true,
     val estructuras: List<Estructura> = emptyList(),
@@ -31,20 +29,11 @@ data class EstructurasUiState(
 }
 
 class EstructurasViewModel(
-    firebase: FirebaseEstructurasRepository,
-    simulador: EstructurasRepository
+    firebase: FirebaseEstructurasRepository
 ) : ViewModel() {
 
-    init {
-        // ENVÍO: cada lista nueva del simulador (cada 3 s) se guarda en Firebase
-        viewModelScope.launch {
-            simulador.observeEstructuras().collect { lista ->
-                firebase.guardar(lista)
-            }
-        }
-    }
-
     // LECTURA: la pantalla muestra lo que hay guardado en Firebase
+    // (lo que envía el Activador desde este u otro celular)
     val uiState: StateFlow<EstructurasUiState> = firebase
         .observeEstructuras()
         .map { estructuras ->
@@ -64,5 +53,15 @@ class EstructurasViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = EstructurasUiState()
+        )
+
+    // CONEXIÓN: true mientras el celular está conectado a Firebase
+    val conectado: StateFlow<Boolean> = firebase
+        .observeConexion()
+        .catch { emit(false) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false
         )
 }

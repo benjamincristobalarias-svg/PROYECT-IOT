@@ -52,6 +52,8 @@ dependencies {
     // Firebase Realtime Database (la versión la fija la BoM)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.database)
+    // Firebase Authentication: inicio de sesión con correo y contraseña
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

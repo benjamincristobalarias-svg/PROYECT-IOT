@@ -1,48 +1,35 @@
-# Seguridad y pruebas de la app (Unidad 2)
+# Seguridad y pruebas de la app
 
 > Hecho con IA (Claude).
 
-## 1. Seguridad
+## Medidas de seguridad (ISO/IEC 27001, Anexo A)
 
-| Medida | Estado | Cómo |
+| Medida | Cómo está en la app | Control |
 |---|---|---|
-| Permisos mínimos | Aplicada | La app solo pide **INTERNET** |
-| Cifrado en tránsito | Aplicada | Firebase se comunica por **HTTPS/TLS** |
-| Acceso solo a lo necesario | Aplicada | Las reglas solo permiten leer y escribir en `estructuras` e `historial`; el resto de la base queda cerrado |
-| Registro de datos | Aplicada | `historial` guarda cada lectura enviada, para revisar qué pasó |
-| Autenticación (ISO/IEC 27400) | Pendiente | Inicio de sesión con Firebase Authentication |
-| Control de acceso por usuario | Pendiente | Cambiar las reglas a `auth != null` cuando exista el login |
+| Control de acceso | Login obligatorio y reglas `auth != null` | 5.15, 8.3 |
+| Autenticación segura | Firebase Authentication; contraseña oculta; mínimo 8 caracteres al crear cuenta; mismo mensaje si falla el correo o la contraseña | 8.5 |
+| Credenciales protegidas | La app no guarda la contraseña; Firebase la guarda cifrada (hash) | 5.17 |
+| Cifrado en tránsito | HTTPS/TLS entre la app y Firebase | 8.24 |
+| Integridad de los datos | Reglas que validan tipos y rangos (0–100 Hz) y rechazan campos desconocidos | 8.26 |
+| Registro de eventos | `historial` guarda cada lectura con el UID de quien la envió; no se puede modificar ni borrar desde la app | 8.15 |
+| Mínimo privilegio | Solo el permiso INTERNET y solo dos ramas de la base; `google-services.json` fuera del repo | 8.3 |
 
-> Las reglas actuales son de **modo de prueba**: cualquiera con la dirección de la base podría escribir. Se cierran al agregar el inicio de sesión.
+## Lineamientos OT (base: IEC 62443)
 
-### Lineamientos de la industria OT
+- **Identificar usuarios:** login obligatorio.
+- **Control de uso:** solo dos ramas; historial que no se modifica; la línea base no se cambia desde la app (se registra en terreno).
+- **Integridad:** valores fuera de rango rechazados por las reglas.
+- **Disponibilidad:** indicador "Conectado a Firebase / Sin conexión"; sin internet Firebase guarda los envíos y los manda al volver.
+- **Conexión y condición separadas:** un sensor desconectado no se muestra como "Normal"; su lectura queda como "no actual".
+- **Sin datos inventados:** si no hay lectura se guarda `null` y se muestra "Sin datos".
 
-- **Conexión y condición separadas:** una estructura puede estar conectada y con daño; son dos estados distintos (`conectada` en Firebase).
-- **Lecturas antiguas marcadas:** si un sensor se desconecta, su última lectura se muestra como "no actual" y no cuenta como alerta.
-- **Sin datos inventados:** si no hay lectura, Firebase no guarda el campo `lectura` y la app muestra "Sin datos", nunca un 0.
-- **Línea base solo en terreno:** la frecuencia de referencia se registra junto al sensor, nunca a distancia.
+## Pruebas
 
-## 2. Pruebas
+- **11 pruebas automáticas** (`SimulacionTest.kt`, `LoginYActivadorTest.kt`): pasaron todas.
+- **6 pruebas de reglas** en la Zona de pruebas de reglas de Firebase: lectura sin sesión rechazada, lectura con sesión autorizada, 500 Hz rechazado, 30 Hz autorizado, historial a nombre de otro usuario rechazado, historial a nombre propio autorizado.
+- **Pruebas con dos celulares** (WiFi, datos móviles, sin internet, envío automático, sensor desconectado, contraseña incorrecta): tabla 11.3 del Informe Formativa U2.
 
-### Pruebas automáticas (`SimulacionTest.kt`)
+## Pendiente
 
-| Prueba | Resultado |
-|---|---|
-| Al inicio, Bodega Norte no tiene lectura | Pasó |
-| A los 6 s, Edificio B tiene daño | Pasó |
-| A los 15 s, Edificio A tiene sismo pero no daño | Pasó |
-| Al desconectarse, Bodega guarda su última lectura | Pasó |
-| Una caída de justo 5 % no cuenta como daño | Pasó |
-
-### Pruebas con Firebase
-
-| N° | Comprobar | ✓ / ✗ |
-|---|---|---|
-| 1 | Al abrir la app aparecen `estructuras/NODO-01`, `NODO-02` y `NODO-03` en la consola | |
-| 2 | Los valores en la consola cambian cada 3 segundos | |
-| 3 | `historial` agrega una lectura nueva por cada envío | |
-| 4 | A los 6 s, Edificio B aparece en rojo en la app y con frecuencia 30 en Firebase | |
-| 5 | A los 12 s, `NODO-03/conectada` queda en false y la app marca la lectura como no actual | |
-| 6 | A los 15 s, Edificio A aparece en amarillo (sismo) | |
-| 7 | Al cambiar un valor a mano en la consola, la app lo muestra (hasta el siguiente envío, 3 s después) | |
-| 8 | Sin internet, la app muestra los últimos datos y se actualiza sola al volver la red | |
+- Reemplazar el Activador por el ESP32 enviando por WiFi (el ESP32 también tendrá que iniciar sesión).
+- En producción: desactivar el registro libre y que el administrador cree las cuentas.
