@@ -1,64 +1,37 @@
-# Guía: poner la app en marcha
+# Guía: ejecutar la app
 
 > Hecho con IA (Claude).
 
-## 1. Firebase (se hace una sola vez)
+## 1. Abrir el proyecto
 
-En **console.firebase.google.com**:
+1. En GitHub: **Code → Download ZIP** y descomprimirlo.
+2. Android Studio → **Open** → elegir la carpeta **`app-android`**, no la carpeta raíz del repo.
+3. Esperar el **Gradle Sync**. La primera vez descarga varias cosas y puede tardar varios minutos.
 
-1. **Crear proyecto**: nombre `monitor-estructural`, desactiva Google Analytics y crea.
-2. **Authentication**: Comenzar → **Correo electrónico/contraseña** → Habilitar → Guardar.
-3. Authentication → **Usuarios** → Agregar usuario: uno para cada integrante (correo y contraseña).
-4. **Realtime Database**: Crear base de datos → **Estados Unidos** → **modo bloqueado**.
-5. Pestaña **Reglas**: pega el contenido de `app-android/firebase/database.rules.json` y aprieta **Publicar**:
-   ```json
-   {
-     "rules": {
-       ".read": "auth != null",
-       ".write": "auth != null"
-     }
-   }
-   ```
-6. ⚙️ **Configuración del proyecto** → Agregar app → **Android** → paquete `cl.inacap.monitorestructural` → Registrar → **descarga `google-services.json`**.
+## 2. Ejecutar
 
-> Haz el paso 4 antes del 6. Si no, `google-services.json` sale sin la dirección de la base de datos.
+- **En emulador:** elegir un dispositivo virtual y apretar **▶ Run**.
+- **En celular:** activar el modo desarrollador (Ajustes → Acerca del teléfono → tocar 7 veces "Número de compilación"), luego la **Depuración USB**, conectar el celular por USB y apretar **▶ Run**.
 
-## 2. Abrir el proyecto en Android Studio
+La app funciona sin internet: los datos vienen del simulador.
 
-1. En GitHub: **Code → Download ZIP** y descomprímelo.
-2. Android Studio → **Open** → elige la carpeta **`app-android`**, no la carpeta raíz del repo.
-3. Copia `google-services.json` dentro de **`app-android/app/`**.
-4. Espera a que termine **Gradle sync**. La primera vez descarga varias cosas y puede tardar de 5 a 15 minutos.
-   - Si aparece el asistente para actualizar el plugin de Android (*Upgrade Assistant*), elige **Remind me later**.
-5. En el celular activa el **modo desarrollador** (Ajustes → Acerca del teléfono → toca 7 veces "Número de compilación") y luego la **Depuración USB**.
-6. Conecta el celular por USB y aprieta **▶ Run**.
+## 3. Qué mostrar en clase
 
-## 3. Instalar en el segundo celular
+| Momento | Qué se ve | Qué se explica |
+|---|---|---|
+| Al abrir | Bodega Norte "Desconectado, sin lecturas" | Sin datos se muestra como `null`, nunca como 0 |
+| 6 s | Edificio B en rojo: "Daño", caída 14,3 % | La frecuencia bajó más de 5 % respecto de la línea base |
+| 12 s | Bodega Norte desconectada con "Última lectura guardada; no es actual" | Conexión y condición son cosas distintas |
+| 15 s | Edificio A en amarillo: "Sismo" | Amplitud alta sin caída de frecuencia |
+| Girar el celular | La lista sigue funcionando | El ViewModel guarda el estado |
+| Cabecera | A los 12 s: "3 estructuras · 2 conectadas · 1 con daño · 0 con sismo" | Contadores calculados desde la misma lista |
 
-- **Opción A:** conectar el otro celular por USB y volver a apretar ▶ Run.
-- **Opción B:** Build → Build App Bundle(s) / APK(s) → **Build APK(s)**. El archivo queda en `app/build/outputs/apk/debug/app-debug.apk`. Se envía al otro celular y se instala aceptando "instalar apps desconocidas".
+Además, en Android Studio abrir `app/src/test/.../SimulacionTest.kt` y apretar ▶ junto a la clase: las 5 pruebas deben pasar.
 
-## 4. Guion de la demo
+## 4. Problemas comunes
 
-| Paso | Celular A (Activador) | Celular B (Monitoreo) | Qué se demuestra |
-|---|---|---|---|
-| 1 | Login con contraseña mala y después con la buena | Login | Autenticación |
-| 2 | Abre **Activador**, deja la frecuencia en 40 Hz y aprieta **Registrar línea base** | Abre **Monitoreo**: aparece Edificio A en verde | Conexión entre los dos celulares |
-| 3 | Activa **Envío automático** y baja el slider a 30 Hz | Edificio A pasa a **rojo: Daño, caída 25 %** | Datos en tiempo real |
-| 4 | Sube a 40 Hz y activa **Simular sismo** | Pasa a **amarillo: Sismo** | Prioridad de estados |
-| 5 | Elige NODO-02 y envía | Aparecen 2 estructuras, la más grave arriba | Varias estructuras |
-| 6 | Apaga el envío automático | A los 15 s pasa a **gris: Sin datos** | Detección de nodo caído |
-| 7 | — | Apaga el WiFi y los datos: aparece el aviso **Sin conexión**. Al encenderlos se actualiza sola | Estabilidad de la conexión |
-| 8 | — | Toca una estructura: **historial** de las últimas 10 mediciones | Guardar y consultar datos |
-| 9 | Muestra en la consola de Firebase los datos y las **Reglas** | Cierra sesión | Seguridad |
-
-## 5. Problemas comunes
-
-| Problema | Solución |
+| Problema | Qué revisar |
 |---|---|
-| `File google-services.json is missing` | Falta copiar el archivo en `app-android/app/` |
-| "Correo o contraseña incorrectos" con los datos buenos | Revisa que Correo/contraseña esté habilitado y que el usuario exista en Authentication |
-| La lista no muestra nada y aparece *Permission denied* | Faltan publicar las reglas o no hay sesión iniciada |
-| El Activador se queda en "Enviando…" | No hay internet; se envía solo al volver la conexión |
-| Todas las estructuras aparecen en gris aunque se estén enviando | La hora del celular está desfasada: activa **fecha y hora automáticas** en los dos celulares |
-| El sync falla por la versión de Java o de Gradle | Sacar captura del error y revisarlo |
+| No reconoce `collectAsStateWithLifecycle` | Que estén las dependencias de Lifecycle en `app/build.gradle.kts` y hacer Sync |
+| Pide otro compileSdk o versión de AGP | Aceptar la actualización que indique Android Studio |
+| La lista vuelve al inicio al volver a la app | Es normal: el simulador se reinicia después de 5 s en segundo plano |

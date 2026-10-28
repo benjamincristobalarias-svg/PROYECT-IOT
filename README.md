@@ -54,7 +54,7 @@ simulacion/
   wokwi_esp32/                               Sketch de un nodo ESP32 completo
 app-android/                                 App Android Unidad 2 (Kotlin + Compose, según la guía del profe)
 docs/
-  app/                                       Versión anterior de la app (con Firebase): guía, seguridad y pruebas
+  app/                                       Cómo ejecutar la app, seguridad y pruebas
   informes/                                  EF1, ES1 e Informe Unidad 2
   mockup/                                    Propuestas de pantallas de la app
   guias/                                     Armado, verificación, materiales y chuleta
