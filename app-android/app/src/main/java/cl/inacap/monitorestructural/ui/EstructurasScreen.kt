@@ -45,7 +45,7 @@ fun EstructurasScreen(state: EstructurasUiState) {
                         "Monitor estructural",
                         style = MaterialTheme.typography.headlineSmall
                     )
-                    Text("Simulación local · Actualización cada 3 s")
+                    Text("Datos desde Firebase · Se envían cada 3 s")
                     Text(
                         "${state.estructuras.size} estructuras · " +
                                 "${state.connectedCount} conectadas · " +

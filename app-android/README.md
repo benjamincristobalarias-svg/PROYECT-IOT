@@ -4,13 +4,14 @@
 
 App hecha siguiendo la guía del profe (**GUIAAPPKOTLIN**) y su **Ejemplo02**: Android Studio + Kotlin + Jetpack Compose + ViewModel.
 
-Por ahora muestra **3 estructuras simuladas** que se actualizan cada 3 segundos, igual que el simulador ambiental de la guía, pero con los datos de nuestro proyecto: frecuencia de vibración, línea base y amplitud. La conexión con Firebase y con el sensor real viene en la guía siguiente.
+La app genera lecturas de **3 estructuras simuladas** cada 3 segundos (como el simulador ambiental de la guía, pero con frecuencia de vibración, línea base y amplitud), las **envía a Firebase Realtime Database** y **muestra lo que hay guardado en Firebase**. Más adelante el simulador se reemplaza por el sensor real.
 
 ## Cómo abrirla
 
-1. Android Studio → **Open** → elegir la carpeta **`app-android`**.
-2. Esperar el **Gradle Sync**.
-3. Elegir un emulador o un celular y apretar **▶ Run**.
+1. Crear el proyecto en Firebase y descargar `google-services.json` (pasos en [`docs/app/guia_puesta_en_marcha.md`](../docs/app/guia_puesta_en_marcha.md)).
+2. Copiar `google-services.json` dentro de **`app-android/app/`**. No se sube al repo.
+3. Android Studio → **Open** → elegir la carpeta **`app-android`** → esperar el **Gradle Sync**.
+4. Elegir un emulador o un celular con internet y apretar **▶ Run**.
 
 ## Organización (igual que la guía)
 
@@ -20,19 +21,29 @@ app/src/main/java/cl/inacap/monitorestructural/
     model/Estructura.kt                datos de una estructura y de una lectura (daño y sismo)
     data/EstructurasRepository.kt      contrato de la fuente de datos
     data/FakeEstructurasRepository.kt  simulador: una lista nueva cada 3 s (Flow)
+    data/FirebaseEstructurasRepository.kt  guarda en Firebase y lee desde Firebase (callbackFlow)
     ui/EstructurasViewModel.kt         estado de la pantalla (StateFlow)
     ui/EstructurasScreen.kt            pantalla en Compose (LazyColumn + Card)
 ```
 
 ```
-FakeEstructurasRepository -> Flow<List<Estructura>>
-            |
-   EstructurasViewModel
-            |
- StateFlow<EstructurasUiState>
-            |
-     EstructurasScreen
+FakeEstructurasRepository --(cada 3 s)--> EstructurasViewModel --guardar()--> Firebase
+                                                                                 |
+EstructurasScreen <-- StateFlow<EstructurasUiState> <-- observeEstructuras() <---+
 ```
+
+## Datos en Firebase
+
+```
+estructuras/
+  NODO-01/  nombre, ubicacion, frecuenciaBaseHz, conectada, lectura { frecuenciaHz, amplitud, measuredAtMillis }
+  NODO-02/  ...
+  NODO-03/  ...
+historial/
+  NODO-01/  {clave}: { frecuenciaHz, amplitud, measuredAtMillis }   <- una por cada envío
+```
+
+Reglas de la base: [`firebase/database.rules.json`](firebase/database.rules.json).
 
 ## Estados
 

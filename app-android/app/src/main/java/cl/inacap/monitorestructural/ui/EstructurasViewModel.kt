@@ -4,6 +4,7 @@ package cl.inacap.monitorestructural.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cl.inacap.monitorestructural.data.EstructurasRepository
+import cl.inacap.monitorestructural.data.FirebaseEstructurasRepository
 import cl.inacap.monitorestructural.model.ConnectionStatus
 import cl.inacap.monitorestructural.model.Estructura
 import kotlinx.coroutines.flow.SharingStarted
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 // Todo lo que la pantalla necesita mostrar
 data class EstructurasUiState(
@@ -29,9 +31,21 @@ data class EstructurasUiState(
 }
 
 class EstructurasViewModel(
-    repository: EstructurasRepository
+    firebase: FirebaseEstructurasRepository,
+    simulador: EstructurasRepository
 ) : ViewModel() {
-    val uiState: StateFlow<EstructurasUiState> = repository
+
+    init {
+        // ENVÍO: cada lista nueva del simulador (cada 3 s) se guarda en Firebase
+        viewModelScope.launch {
+            simulador.observeEstructuras().collect { lista ->
+                firebase.guardar(lista)
+            }
+        }
+    }
+
+    // LECTURA: la pantalla muestra lo que hay guardado en Firebase
+    val uiState: StateFlow<EstructurasUiState> = firebase
         .observeEstructuras()
         .map { estructuras ->
             EstructurasUiState(
@@ -42,7 +56,7 @@ class EstructurasViewModel(
             emit(
                 EstructurasUiState(
                     isLoading = false,
-                    errorMessage = "No se pudieron cargar los datos."
+                    errorMessage = "No se pudieron cargar los datos de Firebase."
                 )
             )
         }

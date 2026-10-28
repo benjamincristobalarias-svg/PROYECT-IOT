@@ -1,37 +1,46 @@
-# Guía: ejecutar la app
+# Guía: Firebase y ejecutar la app
 
 > Hecho con IA (Claude).
 
-## 1. Abrir el proyecto
+## 1. Crear el proyecto en Firebase (una sola vez)
+
+En **console.firebase.google.com**:
+
+1. **Crear proyecto** → nombre `monitor-estructural` → desactivar Google Analytics → Crear.
+2. **Compilación → Realtime Database** → Crear base de datos → **Estados Unidos** → **Comenzar en modo de prueba** → Habilitar.
+3. Pestaña **Reglas**: pegar el contenido de `app-android/firebase/database.rules.json` y apretar **Publicar**.
+4. ⚙️ **Configuración del proyecto** → Agregar app → **Android** → paquete `cl.inacap.monitorestructural` → Registrar.
+5. Descargar **`google-services.json`**. Los demás pasos que muestra Firebase ya están en el código.
+
+> Hacer el paso 2 antes que el 4: si no, `google-services.json` sale sin la dirección de la base de datos.
+
+## 2. Abrir y ejecutar la app
 
 1. En GitHub: **Code → Download ZIP** y descomprimirlo.
-2. Android Studio → **Open** → elegir la carpeta **`app-android`**, no la carpeta raíz del repo.
-3. Esperar el **Gradle Sync**. La primera vez descarga varias cosas y puede tardar varios minutos.
-
-## 2. Ejecutar
-
-- **En emulador:** elegir un dispositivo virtual y apretar **▶ Run**.
-- **En celular:** activar el modo desarrollador (Ajustes → Acerca del teléfono → tocar 7 veces "Número de compilación"), luego la **Depuración USB**, conectar el celular por USB y apretar **▶ Run**.
-
-La app funciona sin internet: los datos vienen del simulador.
+2. Copiar `google-services.json` dentro de **`app-android/app/`**.
+3. Android Studio → **Open** → elegir la carpeta **`app-android`**, no la raíz del repo → esperar el **Gradle Sync**.
+4. Elegir un emulador o un celular **con internet** y apretar **▶ Run**.
 
 ## 3. Qué mostrar en clase
 
-| Momento | Qué se ve | Qué se explica |
-|---|---|---|
-| Al abrir | Bodega Norte "Desconectado, sin lecturas" | Sin datos se muestra como `null`, nunca como 0 |
-| 6 s | Edificio B en rojo: "Daño", caída 14,3 % | La frecuencia bajó más de 5 % respecto de la línea base |
-| 12 s | Bodega Norte desconectada con "Última lectura guardada; no es actual" | Conexión y condición son cosas distintas |
-| 15 s | Edificio A en amarillo: "Sismo" | Amplitud alta sin caída de frecuencia |
-| Girar el celular | La lista sigue funcionando | El ViewModel guarda el estado |
-| Cabecera | A los 12 s: "3 estructuras · 2 conectadas · 1 con daño · 0 con sismo" | Contadores calculados desde la misma lista |
+Tener abiertas al mismo tiempo la app y la consola de Firebase (**Realtime Database → Datos**).
 
-Además, en Android Studio abrir `app/src/test/.../SimulacionTest.kt` y apretar ▶ junto a la clase: las 5 pruebas deben pasar.
+| Momento | En la app | En Firebase |
+|---|---|---|
+| Al abrir | Aparecen las 3 estructuras | Se crean `estructuras/NODO-01`, `NODO-02` y `NODO-03` |
+| Cada 3 s | Cambian la frecuencia y la hora | Los valores se actualizan y crece `historial` |
+| 6 s | Edificio B en rojo: "Daño", caída 14,3 % | `NODO-02/lectura/frecuenciaHz` = 30 |
+| 12 s | Bodega Norte desconectada, con su lectura marcada como no actual | `NODO-03/conectada` = false |
+| 15 s | Edificio A en amarillo: "Sismo" | `NODO-01/lectura/amplitud` = 260000 |
+| Cambiar un dato a mano en la consola | La app muestra el cambio al tiro (hasta el siguiente envío) | — |
+
+Para el informe: sacar capturas de la consola con `estructuras` y `historial` abiertos.
 
 ## 4. Problemas comunes
 
 | Problema | Qué revisar |
 |---|---|
-| No reconoce `collectAsStateWithLifecycle` | Que estén las dependencias de Lifecycle en `app/build.gradle.kts` y hacer Sync |
+| `File google-services.json is missing` | Falta copiar el archivo en `app-android/app/` |
+| "No se pudieron cargar los datos de Firebase" | Que las reglas estén publicadas y que el celular tenga internet |
+| La app no muestra nada y Firebase está vacío | Que la base se haya creado antes de descargar `google-services.json` |
 | Pide otro compileSdk o versión de AGP | Aceptar la actualización que indique Android Studio |
-| La lista vuelve al inicio al volver a la app | Es normal: el simulador se reinicia después de 5 s en segundo plano |

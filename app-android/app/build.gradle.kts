@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    // Lee app/google-services.json y conecta la app con Firebase
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -47,6 +49,9 @@ dependencies {
     // Agregadas según la guía (sección 3.2): ViewModel y collectAsStateWithLifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    // Firebase Realtime Database (la versión la fija la BoM)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
