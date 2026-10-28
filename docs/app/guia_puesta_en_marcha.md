@@ -4,6 +4,8 @@
 
 ## 1. Crear el proyecto en Firebase (una sola vez)
 
+> **Ya está creado:** proyecto `monitor-estructural`, base en Estados Unidos (us-central1), reglas publicadas y app Android registrada. Solo falta descargar `google-services.json` desde ⚙️ **Configuración del proyecto → Tus apps → Monitor Estructural**. Los pasos de abajo quedan como referencia.
+
 En **console.firebase.google.com**:
 
 1. **Crear proyecto** → nombre `monitor-estructural` → desactivar Google Analytics → Crear.

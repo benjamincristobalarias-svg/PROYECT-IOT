@@ -55,7 +55,7 @@ simulacion/
 app-android/                                 App Android Unidad 2 (Kotlin + Compose + Firebase)
 docs/
   app/                                       Firebase, cómo ejecutar la app, seguridad y pruebas
-  informes/                                  EF1, ES1 e Informe Unidad 2
+  informes/                                  EF1, ES1, Informe Unidad 2 e Informe Formativa U2
   mockup/                                    Propuestas de pantallas de la app
   guias/                                     Armado, verificación, materiales y chuleta
   respaldo_estadistico.md                    Datos 27F y CASEN con fuentes
@@ -104,7 +104,8 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 - [ ] Verificación física del enlace Bluetooth entre dos ESP32
 - [x] Unidad 2 — app Android con Compose y ViewModel, estructuras simuladas cada 3 s ([app-android](app-android/))
 - [x] Unidad 2 — la app envía las lecturas a Firebase Realtime Database y muestra lo que hay guardado
-- [ ] Unidad 2 — probar con el proyecto Firebase y agregar el inicio de sesión
+- [x] Unidad 2 — proyecto Firebase creado (`monitor-estructural`) y base de datos documentada en el Informe Formativa U2
+- [ ] Unidad 2 — agregar el inicio de sesión y reglas con `auth != null`
 - [ ] Unidad 3 — integración app ↔ nodos
 - [ ] Unidad 4 — informe final
 
