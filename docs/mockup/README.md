@@ -1,5 +1,7 @@
 # Mockups de la app (Unidad 2)
 
+> Hecho con IA (Claude).
+
 Tres niveles: inicio de sesión, lista de estructuras (dispositivos conectados) y detalle del dispositivo.
 
 | Archivo | Descripción |

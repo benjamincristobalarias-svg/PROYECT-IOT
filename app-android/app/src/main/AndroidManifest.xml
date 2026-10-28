@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hecho con IA (Claude) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Permiso para usar internet (WiFi o datos móviles) y conectarse a Firebase -->

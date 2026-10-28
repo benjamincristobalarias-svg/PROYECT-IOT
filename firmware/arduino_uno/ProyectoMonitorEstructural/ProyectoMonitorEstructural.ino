@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 /* ============================================================
    SISTEMA IoT DE MONITOREO DE SALUD ESTRUCTURAL
    VERSION ARDUINO UNO (un solo nodo, sin Bluetooth)

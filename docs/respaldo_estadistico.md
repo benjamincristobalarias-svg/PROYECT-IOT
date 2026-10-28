@@ -1,5 +1,7 @@
 # Respaldo Estadístico y Justificación del Problema
 
+> Hecho con IA (Claude).
+
 **Proyecto:** Sistema IoT de monitoreo de salud estructural mediante análisis de frecuencia natural
 **Asignatura:** TI3042 — Aplicaciones Móviles para IoT
 **Áreas de impacto:** Seguridad estructural, Infraestructura habitacional y Protección civil

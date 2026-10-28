@@ -1,5 +1,7 @@
 # Seguridad y pruebas de la app (Unidad 2)
 
+> Hecho con IA (Claude).
+
 ## 1. Medidas de seguridad (ISO/IEC 27400)
 
 | Medida | Cómo se cumple | Dónde |

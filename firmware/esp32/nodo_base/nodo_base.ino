@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 /* ============================================================
    NODO BASE  (esclavo Bluetooth)
    Sistema IoT de monitoreo de salud estructural

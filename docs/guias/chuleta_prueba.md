@@ -1,5 +1,7 @@
 # Chuleta para la prueba — Monitor Estructural
 
+> Hecho con IA (Claude).
+
 **Wokwi:** https://wokwi.com/projects/474167699552138241
 
 ---

@@ -1,5 +1,7 @@
 # App Android: Monitor estructural (Unidad 2, Evaluación 4)
 
+> Hecho con IA (Claude).
+
 App en Kotlin + Firebase. Dos celulares se comunican por WiFi o datos móviles a través de Firebase. Uno hace de **Activador** (simula un nodo sensor) y el otro de **Monitoreo**.
 
 - Puesta en marcha y guion de la demo: [`docs/app/guia_puesta_en_marcha.md`](../docs/app/guia_puesta_en_marcha.md)

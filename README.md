@@ -1,5 +1,7 @@
 # PROYECT-IOT — Monitor de salud estructural
 
+> Hecho con IA (Claude).
+
 Proyecto de la asignatura **TI3042 · Aplicaciones Móviles para IoT (INACAP)**.
 
 Sistema IoT que detecta **pérdida de rigidez en estructuras** analizando su frecuencia natural de vibración. Toda estructura vibra a una frecuencia que depende de su masa y su rigidez: si se daña, pierde rigidez y esa frecuencia **baja**, aunque el daño todavía no se vea. El sistema mide la vibración, calcula la frecuencia con una **FFT** y la compara con la línea base de la estructura sana.
@@ -104,3 +106,21 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 - [ ] Unidad 2 — probar la app en dos celulares
 - [ ] Unidad 3 — integración app ↔ nodos
 - [ ] Unidad 4 — informe final
+
+---
+
+## Hecho con IA
+
+Esta versión del repositorio marca todo lo que se hizo con IA (Claude). Los archivos de texto llevan al inicio la línea **"Hecho con IA (Claude)"**. Los archivos que no admiten comentarios se listan aquí:
+
+| Archivo | Qué se hizo con IA |
+|---|---|
+| `docs/informes/*.docx` | Redacción de los informes EF1, ES1 e Informe Unidad 2. Las fotos del prototipo son nuestras |
+| `docs/guias/lista_materiales.docx` | Lista de materiales |
+| `docs/mockup/mockup_claude_v4.png` | Mockup de la app |
+| `docs/arquitectura_varias_estructuras.png` | Diagrama de la arquitectura |
+| `simulacion/wokwi_uno/diagram.json` | Circuito del Uno en Wokwi |
+| `app-android/firebase/database.rules.json` | Reglas de Firebase |
+| `app-android/gradlew`, `gradlew.bat`, `gradle/wrapper/*` | Generados automáticamente por Gradle |
+
+Lo único que no es de la IA es el primer commit del repo (*Initial commit*).

@@ -1,5 +1,7 @@
 # Armado electrónico — Nodo sensor y Nodo base
 
+> Hecho con IA (Claude).
+
 Son **dos circuitos separados**, uno en cada protoboard, cada uno con su ESP32.
 
 **Regla de oro: cablear SIEMPRE con el USB desconectado.**

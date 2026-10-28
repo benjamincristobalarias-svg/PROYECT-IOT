@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 plugins {
     id("com.android.application")
     // Lee app/google-services.json y conecta la app con el proyecto de Firebase

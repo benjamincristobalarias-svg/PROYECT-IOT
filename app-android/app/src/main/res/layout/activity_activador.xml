@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hecho con IA (Claude) -->
 <!-- Pantalla 5: Activador (el celular simula un nodo sensor).
      keepScreenOn evita que la pantalla se apague durante el envío automático. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

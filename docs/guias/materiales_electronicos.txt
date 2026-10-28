@@ -1,3 +1,5 @@
+Hecho con IA (Claude)
+
 LISTA DE COMPONENTES ELECTRONICOS
 Proyecto: Sistema IoT de Monitoreo de Salud Estructural
 Asignatura: TI3042 - Aplicaciones Moviles para IoT

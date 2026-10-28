@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 package cl.inacap.monitorestructural
 
 import android.os.Bundle

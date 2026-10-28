@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hecho con IA (Claude) -->
 <!-- Seguridad de red: la app solo acepta conexiones cifradas (HTTPS/TLS).
      Cualquier conexión sin cifrar (http://) es bloqueada por Android. -->
 <network-security-config>

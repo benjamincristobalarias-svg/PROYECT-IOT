@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 // Dónde busca Gradle los plugins y las librerías del proyecto.
 pluginManagement {
     repositories {

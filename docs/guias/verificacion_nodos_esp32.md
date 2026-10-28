@@ -1,5 +1,7 @@
 # Instrucciones de verificación — Nodos Bluetooth
 
+> Hecho con IA (Claude).
+
 **Qué hay que hacer:** verificar que los dos sketches compilan y, si alcanzas, probar el enlace Bluetooth entre los dos ESP32.
 
 **Archivos:** `nodo_sensor.ino` y `nodo_base.ino`

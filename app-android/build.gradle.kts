@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 // Archivo de nivel superior: declara las versiones de los plugins.
 // AGP 9 compila Kotlin por sí solo (Kotlin integrado), por eso no se
 // declara el plugin org.jetbrains.kotlin.android.

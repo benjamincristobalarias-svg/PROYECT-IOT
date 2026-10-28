@@ -1,3 +1,4 @@
+// Hecho con IA (Claude)
 /* ============================================================
    SISTEMA IoT DE MONITOREO DE SALUD ESTRUCTURAL
    Deteccion de perdida de rigidez por analisis de frecuencia natural

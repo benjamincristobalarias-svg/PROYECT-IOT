@@ -1,5 +1,7 @@
 # Guía: poner la app en marcha
 
+> Hecho con IA (Claude).
+
 ## 1. Firebase (se hace una sola vez)
 
 En **console.firebase.google.com**:
