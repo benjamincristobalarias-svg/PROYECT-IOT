@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Hecho con IA (Claude) -->
 <resources>
-    <!-- Colores generales (los mismos del mockup) -->
-    <color name="primario">#185FA5</color>
-    <color name="fondo">#F6F5F1</color>
-    <color name="blanco">#FFFFFF</color>
-    <color name="texto_suave">#5F5E5A</color>
-    <color name="borde">#D3D1C7</color>
-
-    <!-- Colores de los estados -->
-    <color name="rojo">#C62828</color>
-    <color name="amarillo">#B26A00</color>
-    <color name="verde">#2E7D32</color>
-    <color name="azul">#185FA5</color>
-    <color name="gris">#888780</color>
-
-    <!-- Versiones suaves para los fondos de los avisos -->
-    <color name="rojo_claro">#FCEBEB</color>
-    <color name="amarillo_claro">#FFF4D6</color>
-    <color name="verde_claro">#E6F2E6</color>
-    <color name="azul_claro">#DCE9F7</color>
-    <color name="gris_claro">#EEEDE8</color>
-
-    <color name="ic_launcher_background">#185FA5</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

@@ -1,49 +1,62 @@
-# App Android: Monitor estructural (Unidad 2, Evaluación 4)
+# App Android: Monitor Estructural
 
-> Hecho con IA (Claude).
+> Hecho con IA (Claude), a partir de la plantilla y el Ejemplo02 del profe.
 
-App en Kotlin + Firebase. Dos celulares se comunican por WiFi o datos móviles a través de Firebase. Uno hace de **Activador** (simula un nodo sensor) y el otro de **Monitoreo**.
+App hecha siguiendo la guía del profe (**GUIAAPPKOTLIN**) y su **Ejemplo02**: Android Studio + Kotlin + Jetpack Compose + ViewModel.
 
-- Puesta en marcha y guion de la demo: [`docs/app/guia_puesta_en_marcha.md`](../docs/app/guia_puesta_en_marcha.md)
-- Seguridad (ISO 27400 / OT) y plan de pruebas: [`docs/app/seguridad_y_pruebas.md`](../docs/app/seguridad_y_pruebas.md)
+Por ahora muestra **3 estructuras simuladas** que se actualizan cada 3 segundos, igual que el simulador ambiental de la guía, pero con los datos de nuestro proyecto: frecuencia de vibración, línea base y amplitud. La conexión con Firebase y con el sensor real viene en la guía siguiente.
 
-## Pantallas
+## Cómo abrirla
 
-1. **Login:** Firebase Authentication (correo y contraseña) y "¿Olvidaste tu contraseña?"
-2. **Inicio:** elegir Monitoreo o Activador, y cerrar sesión
-3. **Monitoreo:** lista de estructuras con colores (rojo, amarillo, verde, azul y gris), con lo más grave arriba
-4. **Detalle:** estado, valores, última trama e historial de las últimas 10 mediciones
-5. **Activador:** RadioButtons (nodo), Slider (frecuencia), Switches (sismo y envío automático) y botón Enviar
+1. Android Studio → **Open** → elegir la carpeta **`app-android`**.
+2. Esperar el **Gradle Sync**.
+3. Elegir un emulador o un celular y apretar **▶ Run**.
 
-## Qué hace cada archivo
-
-| Archivo | Qué hace |
-|---|---|
-| `Evaluador.kt` | Reglas de estado de la Unidad 1 (caída > 5 % = daño, amplitud alta = sismo), arma la trama y decide colores y textos |
-| `Estructura.kt` | Clase de datos y conversión desde Firebase (`DataSnapshot`) |
-| `LoginActivity.kt` | Inicio de sesión con `signInWithEmailAndPassword` y recuperación de contraseña |
-| `InicioActivity.kt` | Menú: abre Monitoreo o Activador y cierra sesión |
-| `MonitoreoActivity.kt` | Escucha `/estructuras` con `addValueEventListener`, ordena la lista y muestra el aviso "Sin conexión" |
-| `EstructuraAdapter.kt` | Adaptador del RecyclerView: dibuja cada fila y abre el detalle con un `Intent` |
-| `DetalleActivity.kt` | Lee `/estructuras/{id}` y `/historial/{id}` (últimas 10) |
-| `ActivadorActivity.kt` | Simula el nodo: calcula el estado y guarda con `setValue` en `/estructuras` y `push()` en `/historial` |
-| `res/layout/*.xml` | Diseño de las pantallas (Material Design 3) |
-| `res/xml/network_security_config.xml` | Solo permite conexiones cifradas (HTTPS/TLS) |
-| `firebase/database.rules.json` | Reglas: solo usuarios con sesión leen y escriben |
-
-## Datos en Firebase
+## Organización (igual que la guía)
 
 ```
-estructuras/NODO-01  -> último estado (nombre, estado, frecuencia, base, variacion, amplitud, trama, actualizado)
-historial/NODO-01/{id} -> cada medición enviada (se agrega con push)
+app/src/main/java/cl/inacap/monitorestructural/
+    MainActivity.kt                    crea el repositorio y el ViewModel, y muestra la pantalla
+    model/Estructura.kt                datos de una estructura y de una lectura (daño y sismo)
+    data/EstructurasRepository.kt      contrato de la fuente de datos
+    data/FakeEstructurasRepository.kt  simulador: una lista nueva cada 3 s (Flow)
+    ui/EstructurasViewModel.kt         estado de la pantalla (StateFlow)
+    ui/EstructurasScreen.kt            pantalla en Compose (LazyColumn + Card)
 ```
 
-## Versiones
+```
+FakeEstructurasRepository -> Flow<List<Estructura>>
+            |
+   EstructurasViewModel
+            |
+ StateFlow<EstructurasUiState>
+            |
+     EstructurasScreen
+```
 
-AGP 9.0.1 · Gradle 9.1.0 · compileSdk 36 · minSdk 26 (Android 8.0) · Material 1.13.0 · Firebase BoM 35.0.2
+## Estados
 
-`app/google-services.json` no se sube al repo: se descarga desde la consola de Firebase y se copia en `app-android/app/`.
+| Estado | Cuándo | Color |
+|---|---|---|
+| Daño | La frecuencia bajó más de 5 % respecto de la línea base | Rojo |
+| Sismo | Sin daño, pero la amplitud supera 230.000 | Amarillo |
+| Normal | Frecuencia cerca de la línea base | Verde |
+| Desconectado | El sensor no está conectado; se muestra su última lectura como "no actual" | — |
+| Sin datos | Todavía no llega ninguna lectura (`null`, nunca un 0 inventado) | — |
 
-## Estado
+## Qué pasa en la simulación
 
-Código completo. Se revisó que compile sin errores contra Android 36: los ids y tipos de todas las vistas coinciden con los layouts y las reglas de estado dan lo esperado. **Falta probarla en los celulares con Android Studio.**
+| Tiempo | Edificio A | Edificio B | Bodega Norte |
+|---|---|---|---|
+| 0 s | Normal | Normal | Desconectada, sin datos |
+| 3 s | Normal | Normal | Conectada |
+| 6 s | Normal | **Daño** (caída 14,3 %) | Conectada |
+| 9 s | Normal | **Daño** | Conectada |
+| 12 s | Normal | **Daño** | Desconectada, conserva la lectura de los 9 s |
+| 15 s | **Sismo** | Normal | Conectada |
+
+Después se repite la secuencia.
+
+## Pruebas
+
+`app/src/test/.../SimulacionTest.kt` revisa el simulador y las reglas de daño y sismo. Se ejecuta en Android Studio con el botón ▶ junto a la clase.

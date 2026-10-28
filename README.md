@@ -52,9 +52,9 @@ firmware/
 simulacion/
   wokwi_uno/                                 Proyecto Wokwi del Uno (diagram.json + sketch)
   wokwi_esp32/                               Sketch de un nodo ESP32 completo
-app-android/                                 App Android Unidad 2 (Kotlin + Firebase)
+app-android/                                 App Android Unidad 2 (Kotlin + Compose, según la guía del profe)
 docs/
-  app/                                       Guía de la app, guion de la demo, seguridad y pruebas
+  app/                                       Versión anterior de la app (con Firebase): guía, seguridad y pruebas
   informes/                                  EF1, ES1 e Informe Unidad 2
   mockup/                                    Propuestas de pantallas de la app
   guias/                                     Armado, verificación, materiales y chuleta
@@ -102,8 +102,8 @@ Simulación ESP32 en Wokwi: https://wokwi.com/projects/474167699552138241
 - [x] Recalibración protegida (pulsador mantenido 3 s)
 - [x] Informe Unidad 2 con todas las actualizaciones
 - [ ] Verificación física del enlace Bluetooth entre dos ESP32
-- [x] Unidad 2 — app Android (Kotlin + Firebase): login, monitoreo, detalle y activador ([app-android](app-android/))
-- [ ] Unidad 2 — probar la app en dos celulares
+- [x] Unidad 2 — app Android con Compose y ViewModel, estructuras simuladas cada 3 s ([app-android](app-android/))
+- [ ] Unidad 2 — conectar la app con Firebase (siguiente guía del profe) y probar en dos celulares
 - [ ] Unidad 3 — integración app ↔ nodos
 - [ ] Unidad 4 — informe final
 
@@ -120,7 +120,6 @@ Esta versión del repositorio marca todo lo que se hizo con IA (Claude). Los arc
 | `docs/mockup/mockup_claude_v4.png` | Mockup de la app |
 | `docs/arquitectura_varias_estructuras.png` | Diagrama de la arquitectura |
 | `simulacion/wokwi_uno/diagram.json` | Circuito del Uno en Wokwi |
-| `app-android/firebase/database.rules.json` | Reglas de Firebase |
-| `app-android/gradlew`, `gradlew.bat`, `gradle/wrapper/*` | Generados automáticamente por Gradle |
+| `app-android/` | La base es la plantilla de Android Studio del Ejemplo02 del profe. La IA escribió `MainActivity`, `model/`, `data/`, `ui/Estructuras*` y `SimulacionTest`, y agregó dependencias en `build.gradle.kts` y `libs.versions.toml` |
 
 Lo único que no es de la IA es el primer commit del repo (*Initial commit*).
