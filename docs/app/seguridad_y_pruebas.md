@@ -27,7 +27,7 @@
 
 - **11 pruebas automáticas** (`SimulacionTest.kt`, `LoginYActivadorTest.kt`): pasaron todas.
 - **6 pruebas de reglas** en la Zona de pruebas de reglas de Firebase: lectura sin sesión rechazada, lectura con sesión autorizada, 500 Hz rechazado, 30 Hz autorizado, historial a nombre de otro usuario rechazado, historial a nombre propio autorizado.
-- **Pruebas con dos celulares** (WiFi, datos móviles, sin internet, envío automático, sensor desconectado, contraseña incorrecta): tabla 11.3 del Informe Formativa U2.
+- **Pruebas con dos celulares** (WiFi, datos móviles, sin internet, envío automático, sensor desconectado, contraseña incorrecta): se muestran en la demostración en clase.
 
 ## Pendiente
 

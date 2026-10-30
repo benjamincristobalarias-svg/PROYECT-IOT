@@ -39,7 +39,7 @@ Si hubiera que crear todo de nuevo: Crear proyecto (sin Analytics) → Realtime 
 | A en modo avión, enviar y volver a conectar | A: "Sin conexión"; al volver se confirma solo y llega a B |
 | A: Envío automático | Las 3 estructuras cambian cada 3 s y crece `historial` en la consola |
 
-Las pruebas de estabilidad se anotan en la tabla 11.3 del Informe Formativa U2.
+Las pruebas con dos celulares se muestran en la demostración en clase.
 
 ## 5. Problemas comunes
 
